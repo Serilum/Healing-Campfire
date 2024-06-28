@@ -1,6 +1,8 @@
 package com.natamus.healingcampfire;
 
+import com.natamus.collective.data.BlockEntityData;
 import com.natamus.healingcampfire.config.ConfigHandler;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 
 public class ModCommon {
 
@@ -10,6 +12,6 @@ public class ModCommon {
 	}
 
 	private static void load() {
-		
+		BlockEntityData.addBlockEntityToCache(BlockEntityType.CAMPFIRE);
 	}
 }
