@@ -1,9 +1,8 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "com.natamus.healingcampfire.forge.mixin",
+  "package": "com.natamus.healingcampfire.mixin",
   "compatibilityLevel": "JAVA_17",
-  "refmap": "healingcampfire_forge.refmap.json",
   "mixins": [
 
   ],
