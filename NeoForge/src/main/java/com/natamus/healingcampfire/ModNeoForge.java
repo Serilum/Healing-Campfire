@@ -1,6 +1,7 @@
 package com.natamus.healingcampfire;
 
 import com.natamus.collective.check.RegisterMod;
+import com.natamus.collective.check.ShouldLoadCheck;
 import com.natamus.healingcampfire.neoforge.config.IntegrateNeoForgeConfig;
 import com.natamus.healingcampfire.neoforge.events.NeoForgeCampfireEvent;
 import com.natamus.healingcampfire.util.Reference;
@@ -14,6 +15,10 @@ import net.neoforged.fml.event.lifecycle.FMLLoadCompleteEvent;
 public class ModNeoForge {
 	
 	public ModNeoForge(IEventBus modEventBus) {
+		if (!ShouldLoadCheck.shouldLoad(Reference.MOD_ID)) {
+			return;
+		}
+
 		modEventBus.addListener(this::loadComplete);
 
 		setGlobalConstants();
