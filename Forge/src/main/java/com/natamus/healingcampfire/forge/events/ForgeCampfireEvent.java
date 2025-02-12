@@ -7,12 +7,10 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
-@EventBusSubscriber
 public class ForgeCampfireEvent {
 	@SubscribeEvent
-	public void playerTickEvent(PlayerTickEvent e) {
+	public static void playerTickEvent(PlayerTickEvent e) {
 		Player player = e.player;
 		Level level = player.level();
 		if (level.isClientSide) {
