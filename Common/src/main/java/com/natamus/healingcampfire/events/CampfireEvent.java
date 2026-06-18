@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.BlockEntityTypes;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
@@ -26,7 +26,7 @@ public class CampfireEvent {
 			return;
 		}
 		
-		if (!BlockEntityData.cachedBlockEntities.get(BlockEntityType.CAMPFIRE).containsKey(level)) {
+		if (!BlockEntityData.cachedBlockEntities.get(BlockEntityTypes.CAMPFIRE).containsKey(level)) {
 			return;
 		}
 
@@ -34,7 +34,7 @@ public class CampfireEvent {
 		Vec3i entityVec3i = new Vec3i(entityPos.getX(), entityPos.getY(), entityPos.getZ());
 
 		BlockPos campfirePos = null;
-		for (BlockEntity campfireBlockEntity : BlockEntityData.cachedBlockEntities.get(BlockEntityType.CAMPFIRE).get(level)) {
+		for (BlockEntity campfireBlockEntity : BlockEntityData.cachedBlockEntities.get(BlockEntityTypes.CAMPFIRE).get(level)) {
 			BlockPos nearbyCampfirePos = campfireBlockEntity.getBlockPos();
 			if (!nearbyCampfirePos.closerThan(entityVec3i, ConfigHandler.healingRadius)) {
 				continue;
