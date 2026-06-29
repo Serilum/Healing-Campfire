@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "healingcampfire",
-  "version": "6.2",
+  "version": "6.3",
 
   "name": "Healing Campfire",
   "description": "Creates an area around the campfire where players and passive mobs receive the regeneration effect in a configurable radius.",
@@ -23,7 +23,7 @@
     "fabric-api": "*",
     "minecraft": ">=26.2",
     "java": ">=25",
-    "collective": ">=8.29"
+    "collective": ">=8.38"
   },
 
   "custom": {
@@ -42,11 +42,11 @@
 	  " ",
 	  "Membership sponsors:",
 	  " Andrean Olgo",
+	  " AnyankaT",
 	  " aternosorg",
 	  " Cherriesaurus",
 	  " Josh",
 	  " Linda Jansen",
-	  " Michelle Smith",
 	  " MWS",
 	  " Tyler Behl"
   ]

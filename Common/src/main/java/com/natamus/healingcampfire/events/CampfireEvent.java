@@ -20,13 +20,16 @@ import net.minecraft.world.level.block.entity.BlockEntityTypes;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
+import java.util.List;
+
 public class CampfireEvent {
 	public static void playerTickEvent(ServerLevel level, ServerPlayer player) {
 		if (player.tickCount % ConfigHandler.checkForCampfireDelayInTicks != 0) {
 			return;
 		}
 		
-		if (!BlockEntityData.cachedBlockEntities.get(BlockEntityTypes.CAMPFIRE).containsKey(level)) {
+		List<BlockEntity> campfires = BlockEntityData.getCachedBlockEntities(BlockEntityTypes.CAMPFIRE, level);
+		if (campfires.isEmpty()) {
 			return;
 		}
 
@@ -34,7 +37,7 @@ public class CampfireEvent {
 		Vec3i entityVec3i = new Vec3i(entityPos.getX(), entityPos.getY(), entityPos.getZ());
 
 		BlockPos campfirePos = null;
-		for (BlockEntity campfireBlockEntity : BlockEntityData.cachedBlockEntities.get(BlockEntityTypes.CAMPFIRE).get(level)) {
+		for (BlockEntity campfireBlockEntity : campfires) {
 			BlockPos nearbyCampfirePos = campfireBlockEntity.getBlockPos();
 			if (!nearbyCampfirePos.closerThan(entityVec3i, ConfigHandler.healingRadius)) {
 				continue;

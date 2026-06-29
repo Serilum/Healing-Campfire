@@ -12,6 +12,6 @@ public class ModCommon {
 	}
 
 	private static void load() {
-		BlockEntityData.addBlockEntityToCache(BlockEntityTypes.CAMPFIRE);
+		BlockEntityData.addBlockEntityToCache(BlockEntityTypes.CAMPFIRE, true, false);
 	}
 }
