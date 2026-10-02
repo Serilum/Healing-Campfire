@@ -1,7 +1,7 @@
-package com.natamus.healingcampfire;
+package com.serilum.healingcampfire;
 
 import com.natamus.collective.data.BlockEntityData;
-import com.natamus.healingcampfire.config.ConfigHandler;
+import com.serilum.healingcampfire.config.ConfigHandler;
 import net.minecraft.world.level.block.entity.BlockEntityTypes;
 
 public class ModCommon {

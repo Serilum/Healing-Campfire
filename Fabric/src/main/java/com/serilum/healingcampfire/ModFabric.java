@@ -1,10 +1,10 @@
-package com.natamus.healingcampfire;
+package com.serilum.healingcampfire;
 
 import com.natamus.collective.check.RegisterMod;
 import com.natamus.collective.check.ShouldLoadCheck;
 import com.natamus.collective.fabric.callbacks.CollectivePlayerEvents;
-import com.natamus.healingcampfire.events.CampfireEvent;
-import com.natamus.healingcampfire.util.Reference;
+import com.serilum.healingcampfire.events.CampfireEvent;
+import com.serilum.healingcampfire.util.Reference;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
