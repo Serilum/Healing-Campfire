@@ -1,10 +1,10 @@
-package com.natamus.healingcampfire;
+package com.serilum.healingcampfire;
 
 import com.natamus.collective.check.RegisterMod;
 import com.natamus.collective.check.ShouldLoadCheck;
-import com.natamus.healingcampfire.forge.config.IntegrateForgeConfig;
-import com.natamus.healingcampfire.forge.events.ForgeCampfireEvent;
-import com.natamus.healingcampfire.util.Reference;
+import com.serilum.healingcampfire.forge.config.IntegrateForgeConfig;
+import com.serilum.healingcampfire.forge.events.ForgeCampfireEvent;
+import com.serilum.healingcampfire.util.Reference;
 import net.minecraftforge.eventbus.api.bus.BusGroup;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
@@ -30,7 +30,7 @@ public class ModForge {
 	}
 
 	private void loadComplete(final FMLLoadCompleteEvent event) {
-    	ForgeCampfireEvent.registerEventsInBus();
+		ForgeCampfireEvent.registerEventsInBus();
 	}
 
 	private static void setGlobalConstants() {

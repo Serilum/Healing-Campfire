@@ -1,10 +1,10 @@
-package com.natamus.healingcampfire;
+package com.serilum.healingcampfire;
 
 import com.natamus.collective.check.RegisterMod;
 import com.natamus.collective.check.ShouldLoadCheck;
-import com.natamus.healingcampfire.neoforge.config.IntegrateNeoForgeConfig;
-import com.natamus.healingcampfire.neoforge.events.NeoForgeCampfireEvent;
-import com.natamus.healingcampfire.util.Reference;
+import com.serilum.healingcampfire.neoforge.config.IntegrateNeoForgeConfig;
+import com.serilum.healingcampfire.neoforge.events.NeoForgeCampfireEvent;
+import com.serilum.healingcampfire.util.Reference;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModLoadingContext;

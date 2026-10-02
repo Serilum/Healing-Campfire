@@ -1,7 +1,7 @@
-package com.natamus.healingcampfire.forge.config;
+package com.serilum.healingcampfire.forge.config;
 
 import com.natamus.collective.config.DuskConfig;
-import com.natamus.healingcampfire.util.Reference;
+import com.serilum.healingcampfire.util.Reference;
 import net.minecraftforge.client.ConfigScreenHandler;
 import net.minecraftforge.fml.ModLoadingContext;
 
