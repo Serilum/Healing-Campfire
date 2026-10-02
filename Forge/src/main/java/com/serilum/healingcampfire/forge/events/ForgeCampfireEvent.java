@@ -1,6 +1,6 @@
-package com.natamus.healingcampfire.forge.events;
+package com.serilum.healingcampfire.forge.events;
 
-import com.natamus.healingcampfire.events.CampfireEvent;
+import com.serilum.healingcampfire.events.CampfireEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;

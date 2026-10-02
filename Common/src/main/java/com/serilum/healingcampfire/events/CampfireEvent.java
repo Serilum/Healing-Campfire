@@ -1,7 +1,7 @@
-package com.natamus.healingcampfire.events;
+package com.serilum.healingcampfire.events;
 
 import com.natamus.collective.data.BlockEntityData;
-import com.natamus.healingcampfire.config.ConfigHandler;
+import com.serilum.healingcampfire.config.ConfigHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.server.level.ServerLevel;
