@@ -1,7 +1,7 @@
-package com.natamus.healingcampfire.events;
+package com.serilum.healingcampfire.events;
 
 import com.natamus.collective.data.BlockEntityData;
-import com.natamus.healingcampfire.config.ConfigHandler;
+import com.serilum.healingcampfire.config.ConfigHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.server.level.ServerLevel;
@@ -20,13 +20,16 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
+import java.util.List;
+
 public class CampfireEvent {
 	public static void playerTickEvent(ServerLevel level, ServerPlayer player) {
 		if (player.tickCount % ConfigHandler.checkForCampfireDelayInTicks != 0) {
 			return;
 		}
 		
-		if (!BlockEntityData.cachedBlockEntities.get(BlockEntityType.CAMPFIRE).containsKey(level)) {
+		List<BlockEntity> campfires = BlockEntityData.getCachedBlockEntities(BlockEntityType.CAMPFIRE, level);
+		if (campfires.isEmpty()) {
 			return;
 		}
 
@@ -34,7 +37,7 @@ public class CampfireEvent {
 		Vec3i entityVec3i = new Vec3i(entityPos.getX(), entityPos.getY(), entityPos.getZ());
 
 		BlockPos campfirePos = null;
-		for (BlockEntity campfireBlockEntity : BlockEntityData.cachedBlockEntities.get(BlockEntityType.CAMPFIRE).get(level)) {
+		for (BlockEntity campfireBlockEntity : campfires) {
 			BlockPos nearbyCampfirePos = campfireBlockEntity.getBlockPos();
 			if (!nearbyCampfirePos.closerThan(entityVec3i, ConfigHandler.healingRadius)) {
 				continue;

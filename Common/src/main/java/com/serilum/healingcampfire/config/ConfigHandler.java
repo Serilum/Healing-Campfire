@@ -1,7 +1,7 @@
-package com.natamus.healingcampfire.config;
+package com.serilum.healingcampfire.config;
 
 import com.natamus.collective.config.DuskConfig;
-import com.natamus.healingcampfire.util.Reference;
+import com.serilum.healingcampfire.util.Reference;
 
 import java.util.Arrays;
 import java.util.HashMap;
