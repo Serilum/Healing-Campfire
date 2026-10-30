@@ -1,7 +1,7 @@
 package com.serilum.healingcampfire;
 
-import com.natamus.collective.data.BlockEntityData;
 import com.serilum.healingcampfire.config.ConfigHandler;
+import com.serilum.healingcampfire.util.Util;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
 public class ModCommon {
@@ -12,6 +12,6 @@ public class ModCommon {
 	}
 
 	private static void load() {
-		BlockEntityData.addBlockEntityToCache(BlockEntityType.CAMPFIRE, true, false);
+		Util.cacheCampfireBlockEntityType(BlockEntityType.CAMPFIRE);
 	}
 }
