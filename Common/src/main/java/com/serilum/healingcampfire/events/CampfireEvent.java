@@ -1,127 +1,83 @@
 package com.serilum.healingcampfire.events;
 
-import com.natamus.collective.data.BlockEntityData;
 import com.serilum.healingcampfire.config.ConfigHandler;
+import com.serilum.healingcampfire.util.Util;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Vec3i;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.CampfireBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTypes;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
 import java.util.List;
 
 public class CampfireEvent {
+	public static void onServerStarting(MinecraftServer server) {
+		Util.cacheAllCampfireBlockEntityTypes(server);
+	}
+
 	public static void playerTickEvent(ServerLevel level, ServerPlayer player) {
 		if (player.tickCount % ConfigHandler.checkForCampfireDelayInTicks != 0) {
 			return;
 		}
-		
-		List<BlockEntity> campfires = BlockEntityData.getCachedBlockEntities(BlockEntityTypes.CAMPFIRE, level);
+
+		List<BlockEntity> campfires = Util.getCachedCampfires(level);
 		if (campfires.isEmpty()) {
 			return;
 		}
 
-		BlockPos entityPos = player.blockPosition();
-		Vec3i entityVec3i = new Vec3i(entityPos.getX(), entityPos.getY(), entityPos.getZ());
+		BlockPos playerPos = player.blockPosition();
 
 		BlockPos campfirePos = null;
+		BlockState campfireState = null;
 		for (BlockEntity campfireBlockEntity : campfires) {
-			BlockPos nearbyCampfirePos = campfireBlockEntity.getBlockPos();
-			if (!nearbyCampfirePos.closerThan(entityVec3i, ConfigHandler.healingRadius)) {
+			BlockState nearbyCampfireState = campfireBlockEntity.getBlockState();
+			if (!Util.isHealingCampfire(nearbyCampfireState)) {
 				continue;
 			}
 
-			BlockState campfireState = campfireBlockEntity.getBlockState();
-			Block block = campfireState.getBlock();
-			
-			if (!ConfigHandler.enableEffectForNormalCampfires) {
-				if (block.equals(Blocks.CAMPFIRE)) {
-					continue;
-				}
+			BlockPos nearbyCampfirePos = campfireBlockEntity.getBlockPos();
+			if (!nearbyCampfirePos.closerThan(playerPos, Util.getHealingRadius(nearbyCampfireState))) {
+				continue;
 			}
-			if (!ConfigHandler.enableEffectForSoulCampfires) {
-				if (block.equals(Blocks.SOUL_CAMPFIRE)) {
-					continue;
-				}
-			}
-			
-			if (ConfigHandler.campfireMustBeLit) {
-				Boolean islit = campfireState.getValue(CampfireBlock.LIT);
-				if (!islit) {
-					continue;
-				}
-			}
-			if (ConfigHandler.campfireMustBeSignalling) {
-				Boolean issignalling = campfireState.getValue(CampfireBlock.SIGNAL_FIRE);
-				if (!issignalling) {
-					continue;
-				}
-			}
-			
+
 			campfirePos = nearbyCampfirePos.immutable();
+			campfireState = nearbyCampfireState;
 			break;
 		}
-		
+
 		if (campfirePos == null) {
 			return;
 		}
 
-		MobEffectInstance effectinstance;
-		if (ConfigHandler.hideEffectParticles) {
-			effectinstance = new MobEffectInstance(MobEffects.REGENERATION, ConfigHandler.effectDurationSeconds*20, ConfigHandler.regenerationLevel-1, true, false);
-		}
-		else {
-			effectinstance = new MobEffectInstance(MobEffects.REGENERATION, ConfigHandler.effectDurationSeconds*20, ConfigHandler.regenerationLevel-1);
-		}
-		
-		BlockPos ppos = player.blockPosition();
-		double r = ConfigHandler.healingRadius;
-		if (ppos.closerThan(campfirePos, r)) {
-			boolean addeffect = true;
-			MobEffectInstance currentregen = player.getEffect(effectinstance.getEffect());
-			if (currentregen != null) {
-				int currentduration = currentregen.getDuration();
-				if (currentduration > (ConfigHandler.effectDurationSeconds*10)) {
-					addeffect = false;
-				}
-			}
-			
-			if (addeffect) {
-				player.addEffect(effectinstance);
+		boolean healsHostileMobs = Util.healsHostileMobsInstead(campfireState);
+		if (!healsHostileMobs) {
+			Util.applyCampfireEffects(level, player, campfireState);
+
+			if (!ConfigHandler.healPassiveMobs) {
+				return;
 			}
 		}
 
-		if (ConfigHandler.healPassiveMobs) {
-			for (Entity entity : level.getEntities(player, new AABB(campfirePos.getX()-r, campfirePos.getY()-r, campfirePos.getZ()-r, campfirePos.getX()+r, campfirePos.getY()+r, campfirePos.getZ()+r))) {
-				if (entity instanceof LivingEntity && (!(entity instanceof Player)) && !entity.getType().getCategory().equals(MobCategory.MONSTER)) {
-					LivingEntity le = (LivingEntity)entity;
-					
-					boolean addeffect = true;
-					MobEffectInstance currentregen = le.getEffect(effectinstance.getEffect());
-					if (currentregen != null) {
-						int currentduration = currentregen.getDuration();
-						if (currentduration > (ConfigHandler.effectDurationSeconds*10)) {
-							addeffect = false;
-						}
-					}
-					
-					if (addeffect) {
-						le.addEffect(effectinstance);
-					}
-				}
+		double r = Util.getHealingRadius(campfireState);
+		for (Entity entity : level.getEntities(player, new AABB(campfirePos.getX()-r, campfirePos.getY()-r, campfirePos.getZ()-r, campfirePos.getX()+r, campfirePos.getY()+r, campfirePos.getZ()+r))) {
+			if (!(entity instanceof LivingEntity livingEntity) || entity instanceof Player) {
+				continue;
 			}
+
+			if (Util.isMonster(entity) != healsHostileMobs || Util.isExcludedMob(entity)) {
+				continue;
+			}
+
+			if (!healsHostileMobs && Util.isTargetingPlayer(livingEntity)) {
+				continue;
+			}
+
+			Util.applyCampfireEffects(level, livingEntity, campfireState);
 		}
 	}
 }

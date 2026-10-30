@@ -4,10 +4,17 @@ import com.serilum.healingcampfire.events.CampfireEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;import net.neoforged.bus.api.SubscribeEvent;
+import net.minecraft.world.level.Level;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.neoforge.event.server.ServerAboutToStartEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 public class NeoForgeCampfireEvent {
+	@SubscribeEvent
+	public static void onServerAboutToStart(ServerAboutToStartEvent e) {
+		CampfireEvent.onServerStarting(e.getServer());
+	}
+
 	@SubscribeEvent
 	public static void playerTickEvent(PlayerTickEvent.Post e) {
 		Player player = e.getEntity();
