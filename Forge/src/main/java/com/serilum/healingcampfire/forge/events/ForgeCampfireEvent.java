@@ -6,7 +6,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
-import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.bus.BusGroup;
 import net.minecraftforge.eventbus.api.listener.SubscribeEvent;
 
@@ -14,12 +13,9 @@ import java.lang.invoke.MethodHandles;
 
 public class ForgeCampfireEvent {
 	public static void registerEventsInBus() {
-		BusGroup.DEFAULT.register(MethodHandles.lookup(), ForgeCampfireEvent.class);
-	}
+		// BusGroup.DEFAULT.register(MethodHandles.lookup(), ForgeCampfireEvent.class);
 
-	@SubscribeEvent
-	public static void onServerAboutToStart(ServerAboutToStartEvent e) {
-		CampfireEvent.onServerStarting(e.getServer());
+		PlayerTickEvent.Post.BUS.addListener(ForgeCampfireEvent::playerTickEvent);
 	}
 
 	@SubscribeEvent

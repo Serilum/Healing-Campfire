@@ -1,9 +1,9 @@
 package com.serilum.healingcampfire.events;
 
+import com.natamus.collective.data.BlockEntityData;
 import com.serilum.healingcampfire.config.ConfigHandler;
 import com.serilum.healingcampfire.util.Util;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -16,16 +16,12 @@ import net.minecraft.world.phys.AABB;
 import java.util.List;
 
 public class CampfireEvent {
-	public static void onServerStarting(MinecraftServer server) {
-		Util.cacheAllCampfireBlockEntityTypes(server);
-	}
-
 	public static void playerTickEvent(ServerLevel level, ServerPlayer player) {
 		if (player.tickCount % ConfigHandler.checkForCampfireDelayInTicks != 0) {
 			return;
 		}
 
-		List<BlockEntity> campfires = Util.getCachedCampfires(level);
+		List<BlockEntity> campfires = BlockEntityData.getCachedCampfires(level);
 		if (campfires.isEmpty()) {
 			return;
 		}
