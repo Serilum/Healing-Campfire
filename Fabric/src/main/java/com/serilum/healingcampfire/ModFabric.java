@@ -6,8 +6,6 @@ import com.natamus.collective.fabric.callbacks.CollectivePlayerEvents;
 import com.serilum.healingcampfire.events.CampfireEvent;
 import com.serilum.healingcampfire.util.Reference;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 
@@ -28,10 +26,6 @@ public class ModFabric implements ModInitializer {
 	}
 
 	private void loadEvents() {
-		ServerLifecycleEvents.SERVER_STARTING.register((MinecraftServer minecraftServer) -> {
-			CampfireEvent.onServerStarting(minecraftServer);
-		});
-
 		CollectivePlayerEvents.PLAYER_TICK.register((ServerLevel world, ServerPlayer player) -> {
 			CampfireEvent.playerTickEvent(world, player);
 		});

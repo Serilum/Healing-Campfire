@@ -6,15 +6,9 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
-import net.minecraftforge.event.server.ServerAboutToStartEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class ForgeCampfireEvent {
-	@SubscribeEvent
-	public static void onServerAboutToStart(ServerAboutToStartEvent e) {
-		CampfireEvent.onServerStarting(e.getServer());
-	}
-
 	@SubscribeEvent
 	public static void playerTickEvent(PlayerTickEvent e) {
 		Player player = e.player;
